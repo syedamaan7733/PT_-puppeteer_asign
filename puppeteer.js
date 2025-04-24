@@ -2,10 +2,11 @@ const puppeteer = require("puppeteer");
 
 async function scrapData(username) {
   // it will launch the browser
-  const browse = await puppeteer.launch({ headless: false });
+  const browse = await puppeteer.launch({ headless: true });
+  console.log("Scrapping Initiated....");
   // opens new black page
   const page = await browse.newPage();
-
+  console.log("In proccess...");
   try {
     // take to the page
     await page.goto(`https://github.com/${username}`, {
@@ -19,32 +20,40 @@ async function scrapData(username) {
       // username
       const userName = document
         .querySelector(".vcard-username")
-        .textContent.trim();
-      console.log("checking", userName);
+        ?.textContent.trim();
+      console.log("Checking", userName);
 
       // name
-      const name = document.querySelector(".vcard-fullname").textContent.trim();
+      const name = document.querySelector(".vcard-fullname")?.textContent.trim();
+      console.log("Checking", name);
 
       //bio
       const bio =
         document.querySelector(".user-profile-bio > div")?.textContent.trim() ||
         "N/A";
+      console.log("Checking", bio);
+
       //   const repos = document.querySelector(".Counter "); // ?.textContent.trim();
 
       //   repositories
       const repos = document
         .querySelector(".js-sidenav-container-pjax a:nth-child(2) span")
-        .textContent.trim();
+        ?.textContent.trim();
+      console.log("Checking", repos);
 
       // followers
-      const followers = document
-        .querySelector(".js-profile-editable-area div div a:first-child span")
-        .textContent.trim();
+      const followers =
+        document
+          .querySelector(".js-profile-editable-area div div a:first-child span")
+          ?.textContent.trim() || "N/A";
+      console.log("Checking", followers);
 
       // followings
-      const followings = document
-        .querySelector(".js-profile-editable-area div div a:last-child span")
-        .textContent.trim();
+      const followings =
+        document
+          .querySelector(".js-profile-editable-area div div a:last-child span")
+          ?.textContent.trim() || "N/A";
+      console.log("Checking", followings);
 
       //   repositories
       const topProjects = Array.from(
@@ -72,13 +81,14 @@ async function scrapData(username) {
               ?.textContent.trim() || 0;
 
           const desc =
-            document.querySelector(`${commonCLs} p`)?.textContent.trim() || 0;
+            document.querySelector(`${commonCLs} p`)?.textContent.trim() ||
+            "No Description available";
           console.log(name);
 
           return { name, stars: parseInt(stars), desc };
         })
         .sort((a, b) => b.stars - a.stars);
-      console.log(topProjects);
+      //   console.log(topProjects);
 
       return {
         userName,
@@ -87,21 +97,21 @@ async function scrapData(username) {
         repos: parseInt(repos),
         followers,
         followings,
-        top_repositories: topProjects.splice(3),
+        top_repositories: topProjects.splice(0, 3),
       };
     });
-
-    console.log(userProfile);
+    await browse.close();
+    console.log("Scraping Completed...");
+    return !userProfile.userName ? null : userProfile ;
+    // console.log(userProfile);
 
     // console.log(page);
   } catch (error) {
-    console.log(error);
+    console.error("Scraping Failed:", error);
+    await browser.close();
+    return null;
   }
-
-  await browse.close();
-  console.log("Scrapping Completed...");
 }
 
-// scrapData("kamranahmedse");
-
+// scrapData("kamranahmedse")
 module.exports = scrapData;
