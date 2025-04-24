@@ -1,0 +1,28 @@
+{
+  "name": "puppetier-asignment",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/syedamaan7733/PT_-puppeteer_asign.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/syedamaan7733/PT_-puppeteer_asign/issues"
+  },
+  "homepage": "https://github.com/syedamaan7733/PT_-puppeteer_asign#readme",
+  "dependencies": {
+    "express": "^5.1.0",
+    "puppeteer": "^24.7.1"
+  },
+  "devDependencies": {
+    "morgan": "^1.10.0",
+    "nodemon": "^3.1.10"
+  }
+}
