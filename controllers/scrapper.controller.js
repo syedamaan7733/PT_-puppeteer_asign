@@ -23,7 +23,7 @@ const getGitHubData = async (req, res) => {
       });
       return;
     }
-    res.status(200).json({ success: true, data, savedData });
+    res.status(200).json({ success: true, data });
   } catch (error) {
     console.log("error in scrappper", error);
     res.status(500).json({
