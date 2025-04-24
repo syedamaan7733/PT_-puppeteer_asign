@@ -24,7 +24,9 @@ async function scrapData(username) {
       console.log("Checking", userName);
 
       // name
-      const name = document.querySelector(".vcard-fullname")?.textContent.trim();
+      const name = document
+        .querySelector(".vcard-fullname")
+        ?.textContent.trim();
       console.log("Checking", name);
 
       //bio
@@ -102,7 +104,7 @@ async function scrapData(username) {
     });
     await browse.close();
     console.log("Scraping Completed...");
-    return !userProfile.userName ? null : userProfile ;
+    return !userProfile.userName ? null : userProfile;
     // console.log(userProfile);
 
     // console.log(page);

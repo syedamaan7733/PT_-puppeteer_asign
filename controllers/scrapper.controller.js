@@ -1,5 +1,6 @@
 const scrapData = require("../puppeteer");
 
+// controller for scrapping data
 const getGitHubData = async (req, res) => {
   try {
     const { username } = req.params;
@@ -12,6 +13,7 @@ const getGitHubData = async (req, res) => {
       return;
     }
 
+    // getting info 
     const data = await scrapData(username);
 
     if (!data) {
@@ -21,11 +23,9 @@ const getGitHubData = async (req, res) => {
       });
       return;
     }
-
-    
-
-    res.status(200).json({ success: true, data });
+    res.status(200).json({ success: true, data, savedData });
   } catch (error) {
+    console.log("error in scrappper", error);
     res.status(500).json({
       success: false,
       message: "Something went wrong while getting the Data",
